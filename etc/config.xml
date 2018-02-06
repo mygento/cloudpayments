@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Mygento Team
+ * @copyright Copyright 2017 Mygento (https://www.mygento.ru)
+ * @package Mygento_Cloudpayments
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <cloudpayments>
+                <active>1</active>
+                <model>CloudPaymentsFacade</model>
+                <title>CloudPayments</title>
+                <currency>RUB</currency>
+                <debug>0</debug>
+                <can_authorize>0</can_authorize>
+                <can_capture>1</can_capture>
+                <can_cancel>1</can_cancel>
+                <can_void>1</can_void>
+                <can_refund>1</can_refund>
+                <can_use_internal>1</can_use_internal>
+                <can_use_checkout>1</can_use_checkout>
+                <is_gateway>1</is_gateway>
+                <sort_order>1</sort_order>
+                <tax>1</tax>
+                <shipping_tax>18</shipping_tax>
+                <tax_options>18</tax_options>
+                <tax_all>0</tax_all>
+                <product_tax_attr>tax_class_id</product_tax_attr>
+                <default_shipping_name>1</default_shipping_name>
+            </cloudpayments>
+        </payment>
+    </default>
+</config>

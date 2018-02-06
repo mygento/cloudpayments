@@ -1,0 +1,46 @@
+{
+  "changelog": {
+    "2.2.0": {
+      "text": "Релиз модуля",
+      "date": "30 августа 2017г."
+    }
+  },
+  "price": 0,
+  "type": "m2",
+  "supported": "CE 2.2.0+",
+  "meta_title": "Модуль CloudPayments для Magento 2",
+  "meta_description": "Модуль CloudPayments.ru для Magento 2.x",
+  "description": "CloudPayments.ru для Magento 2.x",
+  "short_description": "CloudPayments — это платежный сервис, который предлагает современный интернет-эквайринг.",
+  "title": "CloudPayments.ru",
+  "name": "Модуль оплаты CloudPayments.ru",
+  "url_path": "cloudpayments-for-magento-2.html",
+  "category": ["payment", "m2"],
+  "open": true,
+  "ver": "2.*",
+  "package_name": "cloudpayments",
+  "manual_link": "https://mygento.atlassian.net/wiki/spaces/MOD/pages/18907153/CloudPayments",
+  "sort_order": 10,
+  "logo": "img/cloudpayments.svg",
+  "git_link": "https://github.com/mygento/cloudpayments",
+  "manual_link": "https://mygento.atlassian.net/wiki/spaces/MOD/pages/18907153",
+  "git_title": "Модуль на github",
+  "show_support": false,
+  "require": "PHP BCMath",
+  "features": [
+    "Передавать информацию о товарах для чека в рамках 54ФЗ;",
+    "Проводить одно- и двухстадийные платежи;",
+    "Работать в качестве Gateway шлюза;",
+    "Делать возвраты платежей."
+  ],
+  "images": [
+    "/img/cloudpayments_1.png",
+    "/img/cloudpayments_2.png",
+    "/img/cloudpayments_3.png",
+    "/img/cloudpayments_4.png",
+    "/img/cloudpayments_5.png",
+    "/img/cloudpayments_6.png",
+    "/img/cloudpayments_7.png",
+    "/img/cloudpayments_8.png"
+  ]
+}

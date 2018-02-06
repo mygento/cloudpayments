@@ -1,0 +1,6 @@
+.DS_Store
+/magento.rb
+/vendor/
+composer.lock
+/.idea
+/nbproject/

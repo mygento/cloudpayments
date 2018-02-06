@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Mygento Team
+ * @copyright Copyright 2017 Mygento (https://www.mygento.ru)
+ * @package Mygento_Cloudpayments
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <router id="standard">
+        <route id="cloudpayments" frontName="cloudpayments">
+            <module name="Mygento_Cloudpayments" />
+        </route>
+    </router>
+</config>

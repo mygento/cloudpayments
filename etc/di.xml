@@ -1,0 +1,136 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Mygento Team
+ * @copyright Copyright 2017 Mygento (https://www.mygento.ru)
+ * @package Mygento_Cloudpayments
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="CloudPaymentsFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="string">cloudpayments</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Mygento\Cloudpayments\Block\Info</argument>
+            <argument name="valueHandlerPool" xsi:type="object">CloudPaymentsValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">CloudPaymentsCommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Configuration reader -->
+    <virtualType name="CloudPaymentsConfig" type="Mygento\Cloudpayments\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="string">cloudpayments</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Commands infrastructure -->
+    <virtualType name="CloudPaymentsCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="capture" xsi:type="string">CloudPaymentsCaptureCommand</item>
+                <item name="void" xsi:type="string">CloudPaymentsVoidCommand</item>
+                <item name="refund" xsi:type="string">CloudPaymentsRefundCommand</item>
+                <item name="cancel" xsi:type="string">CloudPaymentsVoidCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Capture command -->
+    <virtualType name="CloudPaymentsCaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">Mygento\Cloudpayments\Gateway\Request\CaptureRequest</argument>
+            <argument name="handler" xsi:type="object">Mygento\Cloudpayments\Gateway\Response\Response</argument>
+            <argument name="transferFactory" xsi:type="object">Mygento\Payment\Gateway\Http\TransferFactory</argument>
+            <argument name="validator" xsi:type="object">Mygento\Cloudpayments\Gateway\Validator\Validator</argument>
+            <argument name="client" xsi:type="object">Mygento\Cloudpayments\Gateway\Http\Client\Capture</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Capture Request -->
+    <type name="Mygento\Cloudpayments\Gateway\Request\CaptureRequest">
+        <arguments>
+            <argument name="config" xsi:type="object">CloudPaymentsConfig</argument>
+        </arguments>
+    </type>
+
+    <!-- Void command -->
+    <virtualType name="CloudPaymentsVoidCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">Mygento\Cloudpayments\Gateway\Request\VoidRequest</argument>
+            <argument name="handler" xsi:type="object">Mygento\Cloudpayments\Gateway\Response\Cancel</argument>
+            <argument name="transferFactory" xsi:type="object">Mygento\Payment\Gateway\Http\TransferFactory</argument>
+            <argument name="validator" xsi:type="object">Mygento\Cloudpayments\Gateway\Validator\Validator</argument>
+            <argument name="client" xsi:type="object">Mygento\Cloudpayments\Gateway\Http\Client\Cancel</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Void Request -->
+    <type name="Mygento\Cloudpayments\Gateway\Request\VoidRequest">
+        <arguments>
+            <argument name="config" xsi:type="object">CloudPaymentsConfig</argument>
+        </arguments>
+    </type>
+
+    <!-- Refund Command -->
+    <virtualType name="CloudPaymentsRefundCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
+        <arguments>
+            <argument name="requestBuilder" xsi:type="object">Mygento\Cloudpayments\Gateway\Request\RefundRequest</argument>
+            <argument name="handler" xsi:type="object">Mygento\Cloudpayments\Gateway\Response\Refund</argument>
+            <argument name="transferFactory" xsi:type="object">Mygento\Payment\Gateway\Http\TransferFactory</argument>
+            <argument name="validator" xsi:type="object">Mygento\Cloudpayments\Gateway\Validator\Validator</argument>
+            <argument name="client" xsi:type="object">Mygento\Cloudpayments\Gateway\Http\Client\Refund</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Value handlers infrastructure -->
+    <virtualType name="CloudPaymentsValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">CloudPaymentsConfigValueHandler</item>
+                <item name="can_void" xsi:type="string">Mygento\Payment\Gateway\Config\CanVoidHandler</item>
+                <item name="can_capture" xsi:type="string">Mygento\Payment\Gateway\Config\CanCaptureHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="CloudPaymentsConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">CloudPaymentsConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Mygento\Cloudpayments\Block\AbstractInfo">
+        <arguments>
+            <argument name="helper" xsi:type="object">Mygento\Cloudpayments\Helper\Data</argument>
+            <argument name="config" xsi:type="object">CloudPaymentsConfig</argument>
+        </arguments>
+    </type>
+
+    <type name="Mygento\Cloudpayments\Controller\AbstractAction">
+        <arguments>
+            <argument name="helper" xsi:type="object">Mygento\Cloudpayments\Helper\Data</argument>
+        </arguments>
+    </type>
+
+    <!-- Client Config and Helper -->
+    <type name="Mygento\Cloudpayments\Gateway\Http\Client\Client">
+        <arguments>
+            <argument name="config" xsi:type="object">CloudPaymentsConfig</argument>
+            <argument name="helper" xsi:type="object">Mygento\Cloudpayments\Helper\Data</argument>
+        </arguments>
+    </type>
+
+    <!-- Response Config -->
+    <type name="Mygento\Cloudpayments\Gateway\Response\Response">
+        <arguments>
+            <argument name="helper" xsi:type="object">Mygento\Cloudpayments\Helper\Data</argument>
+        </arguments>
+    </type>
+
+    <!-- Validator Config -->
+    <type name="Mygento\Cloudpayments\Gateway\Validator\Validator">
+        <arguments>
+            <argument name="helper" xsi:type="object">Mygento\Cloudpayments\Helper\Data</argument>
+        </arguments>
+    </type>
+</config>

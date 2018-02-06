@@ -1,0 +1,8 @@
+"Order Description","Назначение платежа"
+"Check Settings Url","Настройки Сheck уведомлений"
+"Pay Settings Url","Настройки Pay уведомлений"
+"Refund Settings Url","Настройки Refund уведомлений"
+"Receipt Settings Url","Настройки Receipt уведомлений"
+"Settings for Cloudpayments Control Panel","Настройки для панели управления Cloudpayments"
+"Success page redirect","Ссылка для перенаправления на страницу с текстом об успешной оплате"
+"Error page redirect","Ссылка для перенаправления на страницу с текстом об неуспешной оплате"
