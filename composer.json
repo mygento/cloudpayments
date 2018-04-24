@@ -1,7 +1,7 @@
 {
-  "name": "mygento/cloudpayments",
+  "name": "mygento/module-cloudpayments",
   "type": "magento2-module",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "license": "proprietary",
   "homepage": "https://www.mygento.ru/modules/cloudpayments.html",
   "description": "Модуль интеграции с платежным сервисом Cloudpayments",
