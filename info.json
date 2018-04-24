@@ -22,7 +22,7 @@
   "category": ["payment", "m2"],
   "open": true,
   "ver": "2.*",
-  "package_name": "cloudpayments",
+  "package_name": "module-cloudpayments",
   "manual_link": "https://mygento.atlassian.net/wiki/spaces/MOD/pages/18907153/CloudPayments",
   "sort_order": 10,
   "logo": "img/cloudpayments.svg",
