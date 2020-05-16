@@ -8,15 +8,17 @@
 
 namespace Mygento\Cloudpayments\Gateway\Http\Client;
 
+use Magento\Payment\Gateway\Http\TransferInterface;
+
 class Refund extends Client
 {
-    public function placeRequest(\Magento\Payment\Gateway\Http\TransferInterface $transferObject)
+    public function placeRequest(TransferInterface $transferObject)
     {
-        $this->_helper->addLog('Refund request');
-        $this->_helper->addLog($transferObject->getBody());
+        $this->helper->debug('Refund request');
+        $this->helper->debug($transferObject->getBody());
         $response = $this->sendRequest('/payments/refund', $transferObject->getBody());
-        $this->_helper->addLog('Refund response');
-        $this->_helper->addLog($response);
+        $this->helper->debug('Refund response');
+        $this->helper->debug($response);
         return json_decode($response, true);
     }
 }

@@ -7,20 +7,23 @@
 
 namespace Mygento\Cloudpayments\Controller\Payment;
 
-class Capture extends \Mygento\Cloudpayments\Controller\AbstractAction
+use Magento\Framework\View\Result\Page;
+use Mygento\Cloudpayments\Controller\AbstractAction;
+
+class Capture extends AbstractAction
 {
     /**
-     * @return \Magento\Framework\View\Result\Page
+     * @return void|Page
      */
     public function execute()
     {
-        if (!$this->_helper->getConfig('active') || !$this->_request) {
+        if (!$this->helper->isActive() || !$this->_request) {
             $this->_forward('noroute');
             return;
         }
-        $orderId = $this->_helper->decodeId($this->_request->getParam('order'));
-        $this->_helper->addLog('Paynow for order #' . $orderId);
-        $order = $this->_orderFactory->create()->load($orderId);
+        $orderId = $this->helper->decodeId($this->_request->getParam('order'));
+        $this->helper->debug('Paynow for order #' . $orderId);
+        $order = $this->orderRepository->get($orderId);
         if (!$order->canInvoice() || strpos($order->getPayment()->getMethodInstance()->getCode(), 'cloudpayments') === false) {
             $this->_forward('noroute');
             return;

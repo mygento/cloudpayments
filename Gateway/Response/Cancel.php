@@ -8,6 +8,8 @@
 
 namespace Mygento\Cloudpayments\Gateway\Response;
 
+use Magento\Payment\Gateway\Helper\SubjectReader;
+
 class Cancel extends Response
 {
     /**
@@ -19,7 +21,7 @@ class Cancel extends Response
      */
     public function handle(array $handlingSubject, array $response)
     {
-        $payment = \Magento\Payment\Gateway\Helper\SubjectReader::readPayment($handlingSubject);
+        $payment = SubjectReader::readPayment($handlingSubject);
 
         $payment = $payment->getPayment();
 

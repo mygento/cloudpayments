@@ -8,15 +8,17 @@
 
 namespace Mygento\Cloudpayments\Gateway\Http\Client;
 
+use Magento\Payment\Gateway\Http\TransferInterface;
+
 class Cancel extends Client
 {
-    public function placeRequest(\Magento\Payment\Gateway\Http\TransferInterface $transferObject)
+    public function placeRequest(TransferInterface $transferObject)
     {
-        $this->_helper->addLog('Void request');
-        $this->_helper->addLog($transferObject->getBody());
+        $this->helper->debug('Void request');
+        $this->helper->debug($transferObject->getBody());
         $response = $this->sendRequest('/payments/void', $transferObject->getBody());
-        $this->_helper->addLog('Void response');
-        $this->_helper->addLog($response);
+        $this->helper->debug('Void response');
+        $this->helper->debug($response);
         return json_decode($response, true);
     }
 }

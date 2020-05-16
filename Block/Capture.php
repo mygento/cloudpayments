@@ -7,6 +7,8 @@
 
 namespace Mygento\Cloudpayments\Block;
 
+use Magento\Sales\Model\Order;
+
 class Capture extends AbstractInfo
 {
     /**
@@ -15,14 +17,14 @@ class Capture extends AbstractInfo
     protected $_template = 'Mygento_Cloudpayments::form/capture.phtml';
 
     /**
-     * @var \Magento\Sales\Model\Order
+     * @var Order
      */
     protected $_order;
 
     protected $_success;
 
     /**
-     * @param \Magento\Sales\Model\Order
+     * @param Order
      * @return $this
      */
     public function setOrder($order)
@@ -61,12 +63,12 @@ class Capture extends AbstractInfo
 
     public function getSuccessPage()
     {
-        return $this->getConfig()->getValue('success_page') ?: '/';
+        return $this->getConfig()->getValue('success_page') ?: null;
     }
 
     public function getErrorPage()
     {
-        return $this->getConfig()->getValue('error_page') ?: '/';
+        return $this->getConfig()->getValue('error_page') ?: null;
     }
 
     /**
@@ -84,8 +86,8 @@ class Capture extends AbstractInfo
             'accountId' => $order->getCustomerEmail(),
         ];
         if ($this->getConfig()->getValue('tax')) {
-            $shippingTax   = $this->getConfig()->getValue('tax_shipping');
-            $taxValue      = $this->getConfig()->getValue('tax_options');
+            $shippingTax = $this->getConfig()->getValue('tax_shipping');
+            $taxValue = $this->getConfig()->getValue('tax_options');
 
             $attributeCode = '';
             if (!$this->getConfig()->getValue('tax_all')) {
@@ -121,6 +123,6 @@ class Capture extends AbstractInfo
                 ]
             ];
         }
-        return $result;
+        return json_encode($result);
     }
 }

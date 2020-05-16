@@ -16,17 +16,17 @@ class Client extends \Mygento\Payment\Gateway\Http\Client\Client
     protected $url = 'https://api.cloudpayments.ru';
 
     /**
-     * @param string $endpoint
+     * @param $path
      * @param array $params
      * @return string
      */
     protected function sendRequest($path, array $params = [])
     {
-        $this->_curl->setOption(
+        $this->curl->setOption(
             CURLOPT_USERPWD,
-            $this->_config->getPublicId() . ':' . $this->_config->getApiKey()
+            $this->config->getPublicId() . ':' . $this->config->getApiKey()
         );
-        $this->_curl->post($this->url . $path, $params);
-        return $this->_curl->getBody();
+        $this->curl->post($this->url . $path, $params);
+        return $this->curl->getBody();
     }
 }

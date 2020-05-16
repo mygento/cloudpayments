@@ -8,9 +8,11 @@
 
 namespace Mygento\Cloudpayments\Gateway\Request;
 
+use InvalidArgumentException;
 use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
+use Magento\Payment\Gateway\Request\BuilderInterface;
 
-class CaptureRequest implements \Magento\Payment\Gateway\Request\BuilderInterface
+class CaptureRequest implements BuilderInterface
 {
     /**
      * Builds ENV request
@@ -23,7 +25,7 @@ class CaptureRequest implements \Magento\Payment\Gateway\Request\BuilderInterfac
         if (!isset($buildSubject['payment'])
             || !$buildSubject['payment'] instanceof PaymentDataObjectInterface
         ) {
-            throw new \InvalidArgumentException('Payment data object should be provided');
+            throw new InvalidArgumentException('Payment data object should be provided');
         }
 
         $payment = $buildSubject['payment']->getPayment();

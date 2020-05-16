@@ -21,6 +21,6 @@ class Config extends \Mygento\Payment\Gateway\Config\Config
 
     public function getApiKey()
     {
-        return $this->_encryptor->decrypt($this->getValue('private_key'));
+        return $this->encryptor->decrypt($this->getValue('private_key'));
     }
 }
