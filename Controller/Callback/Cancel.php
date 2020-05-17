@@ -7,11 +7,13 @@
 
 namespace Mygento\Cloudpayments\Controller\Callback;
 
-use Exception;
+use Magento\Framework\App\CsrfAwareActionInterface;
+use Magento\Framework\App\Request\InvalidRequestException;
+use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Controller\Result\Json;
 use Mygento\Cloudpayments\Controller\AbstractAction;
 
-class Cancel extends AbstractAction
+class Cancel extends AbstractAction implements CsrfAwareActionInterface
 {
     /**
      * @return Json
@@ -46,11 +48,27 @@ class Cancel extends AbstractAction
 
         try {
             $this->transHelper->proceedVoid($order, $postData['TransactionId'], $postData['PaymentTransactionId'], $postData['Amount']);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->helper->warning($e->getMessage());
             return $this->resultJsonFactory->create()->setData(['code' => 1]);
         }
 
         return $this->resultJsonFactory->create()->setData(['code' => 0]);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function createCsrfValidationException(RequestInterface $request): ?InvalidRequestException
+    {
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function validateForCsrf(RequestInterface $request): ?bool
+    {
+        return true;
     }
 }
