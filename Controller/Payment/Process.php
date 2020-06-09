@@ -16,7 +16,11 @@ class Process extends AbstractAction
      */
     public function execute()
     {
-        $orderId = $this->checkoutSession->getLastOrderId();
+        if ($hkey = $this->_request->getParam('order')) {
+            $orderId = $this->helper->decodeLink($hkey);
+        } else {
+            $orderId = $this->checkoutSession->getLastOrderId();
+        }
         if (!$this->helper->isActive() || !$this->_request || !$orderId) {
             $this->_forward('noroute');
             return;

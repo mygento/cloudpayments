@@ -6,8 +6,7 @@
  * @package Mygento_Cloudpayments
  */
 -->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <virtualType name="CloudPaymentsFacade" type="Magento\Payment\Model\Method\Adapter">
         <arguments>
             <argument name="code" xsi:type="string">cloudpayments</argument>
@@ -28,7 +27,7 @@
     <!-- Commands infrastructure -->
     <virtualType name="CloudPaymentsCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
         <arguments>
-            <argument name="commands" xsi:type="array">
+            <argument name="commands" xsi:type="array">success_page
                 <item name="capture" xsi:type="string">CloudPaymentsCaptureCommand</item>
                 <item name="void" xsi:type="string">CloudPaymentsVoidCommand</item>
                 <item name="refund" xsi:type="string">CloudPaymentsRefundCommand</item>
@@ -40,8 +39,7 @@
     <!-- Capture command -->
     <virtualType name="CloudPaymentsCaptureCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
-            <argument name="requestBuilder" xsi:type="object">Mygento\Cloudpayments\Gateway\Request\CaptureRequest
-            </argument>
+            <argument name="requestBuilder" xsi:type="object">Mygento\Cloudpayments\Gateway\Request\CaptureRequest</argument>
             <argument name="handler" xsi:type="object">Mygento\Cloudpayments\Gateway\Response\Response</argument>
             <argument name="transferFactory" xsi:type="object">Mygento\Payment\Gateway\Http\TransferFactory</argument>
             <argument name="validator" xsi:type="object">Mygento\Cloudpayments\Gateway\Validator\Validator</argument>
@@ -59,8 +57,7 @@
     <!-- Void command -->
     <virtualType name="CloudPaymentsVoidCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
-            <argument name="requestBuilder" xsi:type="object">Mygento\Cloudpayments\Gateway\Request\VoidRequest
-            </argument>
+            <argument name="requestBuilder" xsi:type="object">Mygento\Cloudpayments\Gateway\Request\VoidRequest</argument>
             <argument name="handler" xsi:type="object">Mygento\Cloudpayments\Gateway\Response\Cancel</argument>
             <argument name="transferFactory" xsi:type="object">Mygento\Payment\Gateway\Http\TransferFactory</argument>
             <argument name="validator" xsi:type="object">Mygento\Cloudpayments\Gateway\Validator\Validator</argument>
@@ -78,8 +75,7 @@
     <!-- Refund Command -->
     <virtualType name="CloudPaymentsRefundCommand" type="Magento\Payment\Gateway\Command\GatewayCommand">
         <arguments>
-            <argument name="requestBuilder" xsi:type="object">Mygento\Cloudpayments\Gateway\Request\RefundRequest
-            </argument>
+            <argument name="requestBuilder" xsi:type="object">Mygento\Cloudpayments\Gateway\Request\RefundRequest</argument>
             <argument name="handler" xsi:type="object">Mygento\Cloudpayments\Gateway\Response\Refund</argument>
             <argument name="transferFactory" xsi:type="object">Mygento\Payment\Gateway\Http\TransferFactory</argument>
             <argument name="validator" xsi:type="object">Mygento\Cloudpayments\Gateway\Validator\Validator</argument>
