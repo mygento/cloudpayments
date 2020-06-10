@@ -20,9 +20,8 @@ class Pay extends AbstractAction implements CsrfAwareActionInterface
      */
     public function execute()
     {
-        $this->helper->debug('pay callback');
         $postData = $this->_request->getParams();
-        $this->helper->debug(json_encode($postData));
+        $this->helper->debug('pay callback', $postData);
         $signature = $this->_request->getHeader('Content-HMAC');
         $this->helper->debug('signature ' . $signature);
 

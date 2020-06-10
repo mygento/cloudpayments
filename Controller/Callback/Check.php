@@ -21,9 +21,8 @@ class Check extends AbstractAction implements CsrfAwareActionInterface
      */
     public function execute()
     {
-        $this->helper->debug('check callback');
         $postData = $this->_request->getParams();
-        $this->helper->debug(json_encode($postData));
+        $this->helper->debug('check callback: ', $postData);
         $signature = $this->_request->getHeader('Content-HMAC');
         $this->helper->debug('signature ' . $signature);
 

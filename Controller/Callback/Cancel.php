@@ -23,9 +23,8 @@ class Cancel extends AbstractAction implements CsrfAwareActionInterface
         // prevent race condition
         sleep(3);
 
-        $this->helper->debug('void callback');
         $postData = $this->_request->getParams();
-        $this->helper->debug(json_encode($postData));
+        $this->helper->debug('Post data: ', $postData);
         $signature = $this->_request->getHeader('Content-HMAC');
         $this->helper->debug('signature ' . $signature);
 
