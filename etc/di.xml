@@ -27,7 +27,7 @@
     <!-- Commands infrastructure -->
     <virtualType name="CloudPaymentsCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
         <arguments>
-            <argument name="commands" xsi:type="array">success_page
+            <argument name="commands" xsi:type="array">
                 <item name="capture" xsi:type="string">CloudPaymentsCaptureCommand</item>
                 <item name="void" xsi:type="string">CloudPaymentsVoidCommand</item>
                 <item name="refund" xsi:type="string">CloudPaymentsRefundCommand</item>
