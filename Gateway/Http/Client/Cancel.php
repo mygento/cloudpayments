@@ -14,11 +14,9 @@ class Cancel extends Client
 {
     public function placeRequest(TransferInterface $transferObject)
     {
-        $this->helper->debug('Void request');
-        $this->helper->debug($transferObject->getBody());
+        $this->helper->debug('void request', ['request' => $transferObject->getBody()]);
         $response = $this->sendRequest('/payments/void', $transferObject->getBody());
-        $this->helper->debug('Void response');
-        $this->helper->debug($response);
+        $this->helper->debug('void response', ['response' => $response]);
 
         return json_decode($response, true);
     }

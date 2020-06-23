@@ -14,11 +14,9 @@ class Capture extends Client
 {
     public function placeRequest(TransferInterface $transferObject)
     {
-        $this->helper->debug('capture request');
-        $this->helper->debug($transferObject->getBody());
+        $this->helper->debug('capture request', ['request' => $transferObject->getBody()]);
         $response = $this->sendRequest('/payments/confirm', $transferObject->getBody());
-        $this->helper->debug('capture response');
-        $this->helper->debug($response);
+        $this->helper->debug('capture response', ['response' => $response]);
 
         return json_decode($response, true);
     }
