@@ -1,7 +1,8 @@
 <?php
+
 /**
  * @author Mygento Team
- * @copyright Copyright 2017 Mygento (https://www.mygento.ru)
+ * @copyright 2017-2020 Mygento (https://www.mygento.ru)
  * @package Mygento_Cloudpayments
  */
 
@@ -9,5 +10,4 @@ namespace Mygento\Cloudpayments\Block;
 
 class Info extends AbstractInfo
 {
-
 }

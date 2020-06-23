@@ -1,7 +1,8 @@
 <?php
+
 /**
  * @author Mygento Team
- * @copyright Copyright 2017 Mygento (https://www.mygento.ru)
+ * @copyright 2017-2020 Mygento (https://www.mygento.ru)
  * @package Mygento_Cloudpayments
  */
 
@@ -18,6 +19,7 @@ class Redirect extends Process
     {
         if (!$this->helper->isActive() || !$this->_request) {
             $this->_forward('noroute');
+
             return;
         }
         $hashKey = $this->getRequest()->getParam('order');
@@ -26,6 +28,7 @@ class Redirect extends Process
         $order = $this->orderRepository->get($orderId);
         if (!$order->canInvoice() || strpos($order->getPayment()->getMethodInstance()->getCode(), 'cloudpayments') === false) {
             $this->_forward('noroute');
+
             return;
         }
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);

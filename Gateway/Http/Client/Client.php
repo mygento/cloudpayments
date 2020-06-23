@@ -2,7 +2,7 @@
 
 /**
  * @author Mygento Team
- * @copyright Copyright 2017 Mygento (https://www.mygento.ru)
+ * @copyright 2017-2020 Mygento (https://www.mygento.ru)
  * @package Mygento_Cloudpayments
  */
 
@@ -27,6 +27,7 @@ class Client extends \Mygento\Payment\Gateway\Http\Client\Client
             $this->config->getPublicId() . ':' . $this->config->getApiKey()
         );
         $this->curl->post($this->url . $path, $params);
+
         return $this->curl->getBody();
     }
 }

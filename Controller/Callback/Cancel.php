@@ -1,7 +1,8 @@
 <?php
+
 /**
  * @author Mygento Team
- * @copyright Copyright 2017 Mygento (https://www.mygento.ru)
+ * @copyright 2017-2020 Mygento (https://www.mygento.ru)
  * @package Mygento_Cloudpayments
  */
 
@@ -31,17 +32,20 @@ class Cancel extends AbstractAction implements CsrfAwareActionInterface
         $valid = $this->helper->validateSignature(file_get_contents('php://input'), $signature);
         if (!$valid) {
             $this->helper->error('invalid signature');
+
             return $this->resultJsonFactory->create()->setData(['code' => 1]);
         }
 
         $order = $this->orderFactory->create()->loadByIncrementId($postData['InvoiceId']);
         if (!$order || !$order->getId()) {
             $this->helper->error('order not found');
+
             return $this->resultJsonFactory->create()->setData(['code' => 1]);
         }
 
         if (!$order->canVoidPayment()) {
             $this->helper->error('order can not be void');
+
             return $this->resultJsonFactory->create()->setData(['code' => 0]);
         }
 
@@ -49,6 +53,7 @@ class Cancel extends AbstractAction implements CsrfAwareActionInterface
             $this->transHelper->proceedVoid($order, $postData['TransactionId'], $postData['PaymentTransactionId'], $postData['Amount']);
         } catch (\Exception $e) {
             $this->helper->warning($e->getMessage());
+
             return $this->resultJsonFactory->create()->setData(['code' => 1]);
         }
 

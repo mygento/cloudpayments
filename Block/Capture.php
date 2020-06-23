@@ -1,7 +1,8 @@
 <?php
+
 /**
  * @author Mygento Team
- * @copyright Copyright 2017 Mygento (https://www.mygento.ru)
+ * @copyright 2017-2020 Mygento (https://www.mygento.ru)
  * @package Mygento_Cloudpayments
  */
 
@@ -24,12 +25,13 @@ class Capture extends AbstractInfo
     protected $_success;
 
     /**
-     * @param Order
+     * @param Order $order
      * @return $this
      */
     public function setOrder($order)
     {
         $this->_order = $order;
+
         return $this;
     }
 
@@ -39,12 +41,13 @@ class Capture extends AbstractInfo
     }
 
     /**
-     * @param boolean
+     * @param bool $flag
      * @return $this
      */
     public function setSuccess($flag)
     {
         $this->_success = $flag;
+
         return $this;
     }
 
@@ -114,15 +117,16 @@ class Capture extends AbstractInfo
                     'quantity' => $item['quantity'],
                     'price' => $item['price'],
                     'amount' => $item['sum'],
-                    'vat' => empty($value) ? null : abs($value)
+                    'vat' => empty($value) ? null : abs($value),
                 ];
             }
             $result['data'] = [
                 'cloudPayments' => [
                     'customerReceipt' => $taxResult,
-                ]
+                ],
             ];
         }
+
         return json_encode($result);
     }
 }

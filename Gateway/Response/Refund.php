@@ -2,18 +2,16 @@
 
 /**
  * @author Mygento Team
- * @copyright Copyright 2017 Mygento (https://www.mygento.ru)
+ * @copyright 2017-2020 Mygento (https://www.mygento.ru)
  * @package Mygento_Cloudpayments
  */
 
 namespace Mygento\Cloudpayments\Gateway\Response;
 
-use Magento\Payment\Gateway\Data\PaymentDataObjectInterface;
 use Magento\Payment\Gateway\Helper\SubjectReader;
 
 class Refund extends Response
 {
-
     /**
      * Handles response
      *
@@ -32,7 +30,7 @@ class Refund extends Response
          * but only on full refund close the authorisation
          */
         $payment->setIsTransactionClosed(true);
-        $closeParent = !(bool)$payment->getCreditmemo()->getInvoice()->canRefund();
+        $closeParent = !(bool) $payment->getCreditmemo()->getInvoice()->canRefund();
         $payment->setShouldCloseParentTransaction($closeParent);
     }
 }

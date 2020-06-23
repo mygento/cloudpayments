@@ -1,7 +1,8 @@
 <?php
+
 /**
  * @author Mygento Team
- * @copyright Copyright 2017 Mygento (https://www.mygento.ru)
+ * @copyright 2017-2020 Mygento (https://www.mygento.ru)
  * @package Mygento_Cloudpayments
  */
 
@@ -23,6 +24,7 @@ class Process extends AbstractAction
         }
         if (!$this->helper->isActive() || !$this->_request || !$orderId) {
             $this->_forward('noroute');
+
             return;
         }
 
@@ -32,6 +34,7 @@ class Process extends AbstractAction
         $this->helper->debug($order->getPayment()->getMethodInstance()->getCode());
         if (!$order->canInvoice() || strpos($order->getPayment()->getMethodInstance()->getCode(), 'cloudpayments') === false) {
             $this->_forward('noroute');
+
             return;
         }
         $this->_view->loadLayout();

@@ -2,7 +2,7 @@
 
 /**
  * @author Mygento Team
- * @copyright Copyright 2017 Mygento (https://www.mygento.ru)
+ * @copyright 2017-2020 Mygento (https://www.mygento.ru)
  * @package Mygento_Cloudpayments
  */
 
@@ -32,7 +32,7 @@ class CaptureRequest implements BuilderInterface
 
         return [
             'TransactionID' => $payment->getParentTransactionId(),
-            'Amount' => $buildSubject['amount']
+            'Amount' => $buildSubject['amount'],
         ];
     }
 }

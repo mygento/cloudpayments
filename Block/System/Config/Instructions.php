@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * @author Mygento Team
+ * @copyright 2017-2020 Mygento (https://www.mygento.ru)
+ * @package Mygento_Cloudpayments
+ */
+
 namespace Mygento\Cloudpayments\Block\System\Config;
 
 use Magento\Config\Block\System\Config\Form\Fieldset;
@@ -7,6 +13,10 @@ use Magento\Framework\Data\Form\Element\AbstractElement;
 
 class Instructions extends Fieldset
 {
+    public function getSiteUrl($path)
+    {
+        return $this->_urlBuilder->getBaseUrl(['_secure' => 1]) . $path;
+    }
 
     /**
      * Return header comment part of html for fieldset
@@ -39,10 +49,5 @@ class Instructions extends Fieldset
             '<td>' . $this->getSiteUrl('cloudpayments/callback/receipt') . '</td>' .
             '</tr>' .
             '</table>';
-    }
-
-    public function getSiteUrl($path)
-    {
-        return $this->_urlBuilder->getBaseUrl(['_secure' => 1]) . $path;
     }
 }

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * @author Mygento Team
- * @copyright Copyright 2017 Mygento (https://www.mygento.ru)
+ * @copyright 2017-2020 Mygento (https://www.mygento.ru)
  * @package Mygento_Cloudpayments
  */
 
@@ -13,12 +14,13 @@ use Mygento\Cloudpayments\Controller\AbstractAction;
 class Capture extends AbstractAction
 {
     /**
-     * @return void|Page
+     * @return Page|void
      */
     public function execute()
     {
         if (!$this->helper->isActive() || !$this->_request) {
             $this->_forward('noroute');
+
             return;
         }
         $orderId = $this->helper->decodeId($this->_request->getParam('order'));
@@ -26,6 +28,7 @@ class Capture extends AbstractAction
         $order = $this->orderRepository->get($orderId);
         if (!$order->canInvoice() || strpos($order->getPayment()->getMethodInstance()->getCode(), 'cloudpayments') === false) {
             $this->_forward('noroute');
+
             return;
         }
         $this->_view->loadLayout();

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * @author Mygento Team
- * @copyright Copyright 2017 Mygento (https://www.mygento.ru)
+ * @copyright 2017-2020 Mygento (https://www.mygento.ru)
  * @package Mygento_Cloudpayments
  */
 
@@ -32,8 +33,7 @@ abstract class AbstractAction extends \Mygento\Payment\Controller\Payment\Abstra
     public function __construct(
         JsonFactory $resultJsonFactory,
         ActionContext $context
-    )
-    {
+    ) {
         parent::__construct($context->context);
         $this->orderRepository = $context->orderRepository;
         $this->resultJsonFactory = $resultJsonFactory;
@@ -43,13 +43,16 @@ abstract class AbstractAction extends \Mygento\Payment\Controller\Payment\Abstra
     {
         if (!isset($postData['Currency']) || $postData['Currency'] !== $order->getOrderCurrencyCode()) {
             $this->helper->error('not valid order currency');
+
             return false;
         }
 
         if (!isset($postData['Amount']) || floatval($postData['Amount']) !== round($order->getGrandTotal(), 2)) {
             $this->helper->error('not valid order payment sum');
+
             return false;
         }
+
         return true;
     }
 }
