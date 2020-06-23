@@ -7,7 +7,9 @@
 
 namespace Mygento\Cloudpayments\Block;
 
-class AbstractInfo extends \Mygento\Payment\Block\ConfigInfo
+use Mygento\Payment\Block\ConfigInfo;
+
+class AbstractInfo extends ConfigInfo
 {
 
 }

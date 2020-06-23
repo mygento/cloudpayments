@@ -93,9 +93,22 @@
             </argument>
         </arguments>
     </virtualType>
+
+    <virtualType name="CloudPaymentsParentActionContext" type="Mygento\Payment\Controller\Payment\ActionContext">
+        <arguments>
+            <argument name="helper" xsi:type="object">Mygento\Cloudpayments\Helper\Data</argument>
+        </arguments>
+    </virtualType>
+
     <virtualType name="CloudPaymentsConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
         <arguments>
             <argument name="configInterface" xsi:type="object">CloudPaymentsConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="CloudPaymentsActionContext" type="Mygento\Cloudpayments\Controller\ActionContext">
+        <arguments>
+            <argument name="context" xsi:type="object">CloudPaymentsParentActionContext</argument>
         </arguments>
     </virtualType>
 
@@ -108,7 +121,7 @@
 
     <type name="Mygento\Cloudpayments\Controller\AbstractAction">
         <arguments>
-            <argument name="helper" xsi:type="object">Mygento\Cloudpayments\Helper\Data</argument>
+            <argument name="context" xsi:type="object">CloudPaymentsActionContext</argument>
         </arguments>
     </type>
 

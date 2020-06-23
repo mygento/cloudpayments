@@ -7,66 +7,87 @@
 
 namespace Mygento\Cloudpayments\Controller\Callback;
 
-class Pay extends \Mygento\Cloudpayments\Controller\AbstractAction
+use Magento\Framework\App\CsrfAwareActionInterface;
+use Magento\Framework\App\Request\InvalidRequestException;
+use Magento\Framework\App\RequestInterface;
+use Magento\Framework\Controller\Result\Json;
+use Mygento\Cloudpayments\Controller\AbstractAction;
+
+class Pay extends AbstractAction implements CsrfAwareActionInterface
 {
     /**
-     * @return \Magento\Framework\Controller\Result\Json
+     * @return Json
      */
     public function execute()
     {
-        $this->_helper->addLog('pay callback');
         $postData = $this->_request->getParams();
-        $this->_helper->addLog($postData);
+        $this->helper->debug('pay callback', $postData);
         $signature = $this->_request->getHeader('Content-HMAC');
-        $this->_helper->addLog('signature '.$signature);
+        $this->helper->debug('signature ' . $signature);
 
-        $valid = $this->_helper->validateSignature(file_get_contents('php://input'), $signature);
+        $valid = $this->helper->validateSignature(file_get_contents('php://input'), $signature);
         if (!$valid) {
-            $this->_helper->addLog('invalid signature');
-            return $this->_resultJsonFactory->create()->setData(['code' => 1]);
+            $this->helper->debug('invalid signature');
+            return $this->resultJsonFactory->create()->setData(['code' => 1]);
         }
 
         if (!isset($postData['Status']) || !in_array($postData['Status'], ['Completed', 'Authorized'])) {
-            $this->_helper->addLog('not paid status');
-            return $this->_resultJsonFactory->create()->setData(['code' => 0]);
+            $this->helper->debug('not paid status');
+            return $this->resultJsonFactory->create()->setData(['code' => 0]);
         }
 
-        $order = $this->_orderFactory->create()->loadByIncrementId($postData['InvoiceId']);
+        $order = $this->orderFactory->create()->loadByIncrementId($postData['InvoiceId']);
         if (!$order || !$order->getId()) {
-            $this->_helper->addLog('order not found');
-            return $this->_resultJsonFactory->create()->setData(['code' => 1]);
+            $this->helper->debug('order not found');
+            return $this->resultJsonFactory->create()->setData(['code' => 1]);
         }
 
         if (!$order->canInvoice()) {
-            $this->_helper->addLog('order can not be invoiced');
-            return $this->_resultJsonFactory->create()->setData(['code' => 0]);
+            $this->helper->debug('order can not be invoiced');
+            return $this->resultJsonFactory->create()->setData(['code' => 0]);
         }
 
         $valid = $this->validateOrder($order, $postData);
         if (!$valid) {
-            $this->_helper->addLog('not valid order data');
-            return $this->_resultJsonFactory->create()->setData(['code' => 1]);
+            $this->helper->debug('not valid order data');
+            return $this->resultJsonFactory->create()->setData(['code' => 1]);
         }
 
         unset($postData['Token']);
         unset($postData['Data']);
-        
+
         try {
             if ($postData['Status'] == 'Authorized') {
-                $this->_transHelper->proceedAuthorize($order, $postData['TransactionId'], $postData['Amount'], $postData);
-                $this->_helper->addLog('order authorized');
+                $this->transHelper->proceedAuthorize($order, $postData['TransactionId'], $postData['Amount'], $postData);
+                $this->helper->debug('order authorized');
             }
 
             if ($postData['Status'] == 'Completed') {
-                $this->_transHelper->proceedCapture($order, $postData['TransactionId'], $postData['Amount'], $postData);
-                $this->_helper->addLog('order invoiced');
+                $this->transHelper->proceedCapture($order, $postData['TransactionId'], $postData['Amount'], $postData);
+                $this->helper->debug('order invoiced');
             }
         } catch (\Exception $e) {
-            $this->_helper->addLog($e->getMessage());
-            return $this->_resultJsonFactory->create()->setData(['code' => 1]);
+            $this->helper->warning($e->getMessage());
+            return $this->resultJsonFactory->create()->setData(['code' => 1]);
         }
 
-        $this->_helper->addLog('pay success response');
-        return $this->_resultJsonFactory->create()->setData(['code' => 0]);
+        $this->helper->debug('pay success response');
+        return $this->resultJsonFactory->create()->setData(['code' => 0]);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function createCsrfValidationException(RequestInterface $request): ?InvalidRequestException
+    {
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function validateForCsrf(RequestInterface $request): ?bool
+    {
+        return true;
     }
 }

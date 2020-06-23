@@ -7,13 +7,12 @@
 
 namespace Mygento\Cloudpayments\Controller\Payment;
 
-use Magento\Framework\View\Result\Page;
-use Mygento\Cloudpayments\Controller\AbstractAction;
+use Magento\Framework\Controller\ResultFactory;
 
-class Capture extends AbstractAction
+class Redirect extends Process
 {
     /**
-     * @return void|Page
+     * @return void
      */
     public function execute()
     {
@@ -21,15 +20,16 @@ class Capture extends AbstractAction
             $this->_forward('noroute');
             return;
         }
-        $orderId = $this->helper->decodeId($this->_request->getParam('order'));
+        $hashKey = $this->getRequest()->getParam('order');
+        $orderId = $this->helper->decodeLink($hashKey);
         $this->helper->debug('Paynow for order #' . $orderId);
         $order = $this->orderRepository->get($orderId);
         if (!$order->canInvoice() || strpos($order->getPayment()->getMethodInstance()->getCode(), 'cloudpayments') === false) {
             $this->_forward('noroute');
             return;
         }
-        $this->_view->loadLayout();
-        $this->_view->getLayout()->getBlock('cloudpayments.capture')->setOrder($order);
-        $this->_view->renderLayout();
+        $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
+
+        return $resultRedirect->setPath('cloudpayments/payment/process', $this->_request->getParams());
     }
 }

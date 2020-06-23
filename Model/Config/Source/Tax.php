@@ -2,7 +2,9 @@
 
 namespace Mygento\Cloudpayments\Model\Config\Source;
 
-class Tax implements \Magento\Framework\Option\ArrayInterface
+use Magento\Framework\Data\OptionSourceInterface;
+
+class Tax implements OptionSourceInterface
 {
     /**
      * Return array of options as value-label pairs
@@ -12,11 +14,13 @@ class Tax implements \Magento\Framework\Option\ArrayInterface
     public function toOptionArray()
     {
         return [
+            ['value' => 20, 'label' => __('VAT20')],
             ['value' => 18, 'label' => __('VAT18')],
             ['value' => 10, 'label' => __('VAT10')],
             ['value' => 0, 'label' => __('VAT0')],
             ['value' => 110, 'label' => __('VAT110')],
             ['value' => 118, 'label' => __('VAT118')],
+            ['value' => 120, 'label' => __('VAT120')],
             ['value' => null, 'label' => __('VAT Free')],
         ];
     }

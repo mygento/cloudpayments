@@ -22,7 +22,7 @@ class Validator extends \Mygento\Payment\Gateway\Validator\Validator
             array_push($errorMessages, $response['Message']);
         }
 
-        $this->_helper->addLog('Validate result: '. $isValid);
+        $this->helper->debug('Validate result: ' . $isValid);
 
         return $this->createResult($isValid, $errorMessages);
     }

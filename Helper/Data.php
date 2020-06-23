@@ -12,11 +12,16 @@ namespace Mygento\Cloudpayments\Helper;
  */
 class Data extends \Mygento\Payment\Helper\Data
 {
+    const CODE = 'cloudpayments';
 
-    protected $_code = 'cloudpayments';
+    /**
+     * @var string
+     */
+    protected $code = self::CODE;
 
     /**
      * @param string $message
+     * @param $signature
      * @return boolean
      */
     public function validateSignature($message, $signature)

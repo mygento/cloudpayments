@@ -1,28 +1,15 @@
-<script src="https://widget.cloudpayments.ru/bundles/cloudpayments"></script>
-<script type="text/javascript">
-    require(['mage/url'], function (url) {
-        var payHandler = function () {
-            url.setBaseUrl('<?php /* @escapeNotVerified */ echo $block->getBaseUrl();?>');
-
-            var widget = new cp.CloudPayments();
-            widget.<?php echo $block->isTwoStep() ? 'auth' : 'charge'; ?>(<?php echo json_encode($block->getWidgetData());?>,
-                function (options) { // success
-                    //действие при успешном платеже
-                    <?php if($block->getSuccess()):?>
-                    window.location.replace(url.build('checkout/onepage/success'));
-                    <?php else:?>
-                    window.location.replace(url.build('<?php echo $block->getSuccessPage() ?>'));
-                    <?php endif;?>
-                },
-                function (reason, options) { // fail
-                    //console.log(reason, options);
-                    <?php if($block->getSuccess()):?>
-                    window.location.replace(url.build('checkout/onepage/success'));
-                    <?php else:?>
-                    window.location.replace(url.build('<?php echo $block->getErrorPage() ?>'));
-                    <?php endif;?>
-                });
-        };
-        payHandler();
-    });
+<?php
+/* @var $block \Mygento\Cloudpayments\Block\Capture */
+?>
+<script type="text/x-magento-init">
+{"*":
+    {"cloudPaymentsFrame": {
+        "steps": "charge",
+        "params": <?php echo $block->getWidgetData(); ?>,
+        "baseUrl": "<?php echo $block->getBaseUrl(); ?>",
+        "successPageUrl": "<?php echo $block->getSuccessPage(); ?>",
+        "errorPageUrl": "<?php echo $block->getErrorPage(); ?>"
+        }
+    }
+}
 </script>
