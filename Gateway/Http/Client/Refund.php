@@ -14,11 +14,9 @@ class Refund extends Client
 {
     public function placeRequest(TransferInterface $transferObject)
     {
-        $this->helper->debug('Refund request');
-        $this->helper->debug($transferObject->getBody());
+        $this->helper->debug('Refund request', ['request' => $transferObject->getBody()]);
         $response = $this->sendRequest('/payments/refund', $transferObject->getBody());
-        $this->helper->debug('Refund response');
-        $this->helper->debug($response);
+        $this->helper->debug('Refund response', ['response' => $response]);
 
         return json_decode($response, true);
     }
