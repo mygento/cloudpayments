@@ -22,6 +22,9 @@ class Capture extends AbstractInfo
      */
     protected $_order;
 
+    /**
+     * @var bool
+     */
     protected $_success;
 
     /**
@@ -35,6 +38,9 @@ class Capture extends AbstractInfo
         return $this;
     }
 
+    /**
+     * @return Order
+     */
     public function getOrder()
     {
         return $this->_order;
@@ -51,6 +57,9 @@ class Capture extends AbstractInfo
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getSuccess()
     {
         return $this->_success;
@@ -64,11 +73,17 @@ class Capture extends AbstractInfo
         return $this->getConfig()->getValue('step') == 2;
     }
 
+    /**
+     * @return string|null
+     */
     public function getSuccessPage()
     {
         return $this->getConfig()->getValue('success_page') ?: null;
     }
 
+    /**
+     * @return string|null
+     */
     public function getErrorPage()
     {
         return $this->getConfig()->getValue('error_page') ?: null;

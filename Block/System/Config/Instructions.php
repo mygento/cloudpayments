@@ -13,6 +13,10 @@ use Magento\Framework\Data\Form\Element\AbstractElement;
 
 class Instructions extends Fieldset
 {
+    /**
+     * @param string $path
+     * @return string
+     */
     public function getSiteUrl($path)
     {
         return $this->_urlBuilder->getBaseUrl(['_secure' => 1]) . $path;
@@ -23,6 +27,8 @@ class Instructions extends Fieldset
      *
      * @param AbstractElement $element
      * @return string
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     protected function _getHeaderCommentHtml($element)
     {

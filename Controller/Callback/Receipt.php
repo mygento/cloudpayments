@@ -27,7 +27,7 @@ class Receipt extends AbstractAction implements CsrfAwareActionInterface
         $signature = $this->_request->getHeader('Content-HMAC');
         $this->helper->debug('signature ' . $signature);
 
-        $valid = $this->helper->validateSignature(file_get_contents('php://input'), $signature);
+        $valid = $this->helper->validateSignature(file_get_contents('php://input'), $signature); // @codingStandardsIgnoreLine
         if (!$valid) {
             $this->helper->error('invalid signature');
 
@@ -53,12 +53,22 @@ class Receipt extends AbstractAction implements CsrfAwareActionInterface
 
         try {
             if ($postData['Type'] == 'Income') {
-                $this->transHelper->proceedReceipt($order, $postData['Id'], $postData['TransactionId'], $postData);
+                $this->transHelper->proceedReceipt(
+                    $order,
+                    $postData['Id'],
+                    $postData['TransactionId'],
+                    $postData
+                );
                 $this->helper->debug('receipt income');
             }
 
             if ($postData['Type'] == 'IncomeReturn') {
-                $this->transHelper->proceedRefundReceipt($order, $postData['Id'], $postData['TransactionId'], $postData);
+                $this->transHelper->proceedRefundReceipt(
+                    $order,
+                    $postData['Id'],
+                    $postData['TransactionId'],
+                    $postData
+                );
                 $this->helper->debug('receipt refund');
             }
         } catch (\Exception $e) {
@@ -71,7 +81,7 @@ class Receipt extends AbstractAction implements CsrfAwareActionInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function createCsrfValidationException(RequestInterface $request): ?InvalidRequestException
     {
@@ -79,7 +89,7 @@ class Receipt extends AbstractAction implements CsrfAwareActionInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function validateForCsrf(RequestInterface $request): ?bool
     {

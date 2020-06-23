@@ -25,11 +25,14 @@ abstract class AbstractAction extends \Mygento\Payment\Controller\Payment\Abstra
     protected $resultJsonFactory;
 
     /**
-     * @param ActionContext $context
      * @var OrderRepositoryInterface
      */
     protected $orderRepository;
 
+    /**
+     * @param JsonFactory $resultJsonFactory
+     * @param ActionContext $context
+     */
     public function __construct(
         JsonFactory $resultJsonFactory,
         ActionContext $context
@@ -39,6 +42,11 @@ abstract class AbstractAction extends \Mygento\Payment\Controller\Payment\Abstra
         $this->resultJsonFactory = $resultJsonFactory;
     }
 
+    /**
+     * @param \Magento\Sales\Model\Order $order
+     * @param array $postData
+     * @return bool
+     */
     protected function validateOrder($order, $postData)
     {
         if (!isset($postData['Currency']) || $postData['Currency'] !== $order->getOrderCurrencyCode()) {

@@ -26,7 +26,7 @@ class Check extends AbstractAction implements CsrfAwareActionInterface
         $signature = $this->_request->getHeader('Content-HMAC');
         $this->helper->debug('signature ' . $signature);
 
-        $valid = $this->helper->validateSignature(file_get_contents('php://input'), $signature);
+        $valid = $this->helper->validateSignature(file_get_contents('php://input'), $signature); // @codingStandardsIgnoreLine
         if (!$valid) {
             $this->helper->debug('invalid signature');
 
@@ -64,7 +64,7 @@ class Check extends AbstractAction implements CsrfAwareActionInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function createCsrfValidationException(RequestInterface $request): ?InvalidRequestException
     {
@@ -72,7 +72,7 @@ class Check extends AbstractAction implements CsrfAwareActionInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function validateForCsrf(RequestInterface $request): ?bool
     {

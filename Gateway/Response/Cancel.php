@@ -18,6 +18,8 @@ class Cancel extends Response
      * @param array $handlingSubject
      * @param array $response
      * @return void
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function handle(array $handlingSubject, array $response)
     {

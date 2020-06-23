@@ -22,7 +22,7 @@ class Data extends \Mygento\Payment\Helper\Data
 
     /**
      * @param string $message
-     * @param $signature
+     * @param string $signature
      * @return bool
      */
     public function validateSignature($message, $signature)

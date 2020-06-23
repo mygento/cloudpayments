@@ -12,6 +12,10 @@ use Magento\Payment\Gateway\Http\TransferInterface;
 
 class Capture extends Client
 {
+    /**
+     * @param TransferInterface $transferObject
+     * @return array
+     */
     public function placeRequest(TransferInterface $transferObject)
     {
         $this->helper->debug('capture request', ['request' => $transferObject->getBody()]);

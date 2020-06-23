@@ -26,7 +26,8 @@ class Capture extends AbstractAction
         $orderId = $this->helper->decodeId($this->_request->getParam('order'));
         $this->helper->debug('Paynow for order #' . $orderId);
         $order = $this->orderRepository->get($orderId);
-        if (!$order->canInvoice() || strpos($order->getPayment()->getMethodInstance()->getCode(), 'cloudpayments') === false) {
+        $code = $order->getPayment()->getMethodInstance()->getCode();
+        if (!$order->canInvoice() || strpos($code, 'cloudpayments') === false) {
             $this->_forward('noroute');
 
             return;

@@ -12,6 +12,10 @@ use Magento\Payment\Gateway\Http\TransferInterface;
 
 class Cancel extends Client
 {
+    /**
+     * @param TransferInterface $transferObject
+     * @return array
+     */
     public function placeRequest(TransferInterface $transferObject)
     {
         $this->helper->debug('void request', ['request' => $transferObject->getBody()]);

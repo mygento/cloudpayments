@@ -30,11 +30,12 @@ class Process extends AbstractAction
 
         $this->helper->debug('Pay after order #' . $orderId);
         $order = $this->orderRepository->get($orderId);
+        $code = $order->getPayment()->getMethodInstance()->getCode();
         $this->helper->debug('Pay process controller', [
             'can_invoice' => $order->canInvoice(),
-            'code' => $order->getPayment()->getMethodInstance()->getCode(),
+            'code' => $code,
         ]);
-        if (!$order->canInvoice() || strpos($order->getPayment()->getMethodInstance()->getCode(), 'cloudpayments') === false) {
+        if (!$order->canInvoice() || strpos($code, 'cloudpayments') === false) {
             $this->_forward('noroute');
 
             return;

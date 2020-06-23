@@ -12,6 +12,10 @@ use Magento\Payment\Gateway\Http\TransferInterface;
 
 class Refund extends Client
 {
+    /**
+     * @param TransferInterface $transferObject
+     * @return array
+     */
     public function placeRequest(TransferInterface $transferObject)
     {
         $this->helper->debug('Refund request', ['request' => $transferObject->getBody()]);

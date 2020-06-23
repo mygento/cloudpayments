@@ -13,11 +13,17 @@ namespace Mygento\Cloudpayments\Gateway\Config;
  */
 class Config extends \Mygento\Payment\Gateway\Config\Config
 {
+    /**
+     * @return string
+     */
     public function getPublicId()
     {
         return trim($this->getValue('public_id'));
     }
 
+    /**
+     * @return string|null
+     */
     public function getApiKey()
     {
         return $this->encryptor->decrypt($this->getValue('private_key'));

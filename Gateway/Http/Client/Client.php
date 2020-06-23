@@ -16,7 +16,7 @@ class Client extends \Mygento\Payment\Gateway\Http\Client\Client
     protected $url = 'https://api.cloudpayments.ru';
 
     /**
-     * @param $path
+     * @param string $path
      * @param array $params
      * @return string
      */

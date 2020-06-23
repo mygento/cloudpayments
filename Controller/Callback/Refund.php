@@ -22,14 +22,14 @@ class Refund extends AbstractAction implements CsrfAwareActionInterface
     public function execute()
     {
         // prevent race condition
-        sleep(3);
+        sleep(3); // @codingStandardsIgnoreLine
 
         $postData = $this->_request->getParams();
         $this->helper->debug('refund callback', $postData);
         $signature = $this->_request->getHeader('Content-HMAC');
         $this->helper->debug('signature ' . $signature);
 
-        $valid = $this->helper->validateSignature(file_get_contents('php://input'), $signature);
+        $valid = $this->helper->validateSignature(file_get_contents('php://input'), $signature); // @codingStandardsIgnoreLine
         if (!$valid) {
             $this->helper->error('invalid signature');
 
@@ -50,7 +50,12 @@ class Refund extends AbstractAction implements CsrfAwareActionInterface
         }
 
         try {
-            $this->transHelper->proceedRefund($order, $postData['TransactionId'], $postData['PaymentTransactionId'], $postData['Amount']);
+            $this->transHelper->proceedRefund(
+                $order,
+                $postData['TransactionId'],
+                $postData['PaymentTransactionId'],
+                $postData['Amount']
+            );
         } catch (\Exception $e) {
             $this->helper->warning($e->getMessage());
 
@@ -61,7 +66,7 @@ class Refund extends AbstractAction implements CsrfAwareActionInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function createCsrfValidationException(RequestInterface $request): ?InvalidRequestException
     {
@@ -69,7 +74,7 @@ class Refund extends AbstractAction implements CsrfAwareActionInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function validateForCsrf(RequestInterface $request): ?bool
     {

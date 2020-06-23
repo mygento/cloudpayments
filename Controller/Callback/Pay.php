@@ -18,6 +18,9 @@ class Pay extends AbstractAction implements CsrfAwareActionInterface
 {
     /**
      * @return Json
+     *
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public function execute()
     {
@@ -26,7 +29,7 @@ class Pay extends AbstractAction implements CsrfAwareActionInterface
         $signature = $this->_request->getHeader('Content-HMAC');
         $this->helper->debug('signature ' . $signature);
 
-        $valid = $this->helper->validateSignature(file_get_contents('php://input'), $signature);
+        $valid = $this->helper->validateSignature(file_get_contents('php://input'), $signature); // @codingStandardsIgnoreLine
         if (!$valid) {
             $this->helper->debug('invalid signature');
 
@@ -64,12 +67,22 @@ class Pay extends AbstractAction implements CsrfAwareActionInterface
 
         try {
             if ($postData['Status'] == 'Authorized') {
-                $this->transHelper->proceedAuthorize($order, $postData['TransactionId'], $postData['Amount'], $postData);
+                $this->transHelper->proceedAuthorize(
+                    $order,
+                    $postData['TransactionId'],
+                    $postData['Amount'],
+                    $postData
+                );
                 $this->helper->debug('order authorized');
             }
 
             if ($postData['Status'] == 'Completed') {
-                $this->transHelper->proceedCapture($order, $postData['TransactionId'], $postData['Amount'], $postData);
+                $this->transHelper->proceedCapture(
+                    $order,
+                    $postData['TransactionId'],
+                    $postData['Amount'],
+                    $postData
+                );
                 $this->helper->debug('order invoiced');
             }
         } catch (\Exception $e) {
@@ -84,7 +97,7 @@ class Pay extends AbstractAction implements CsrfAwareActionInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function createCsrfValidationException(RequestInterface $request): ?InvalidRequestException
     {
@@ -92,7 +105,7 @@ class Pay extends AbstractAction implements CsrfAwareActionInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function validateForCsrf(RequestInterface $request): ?bool
     {
